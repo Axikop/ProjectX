@@ -1,21 +1,114 @@
 A non trivial ds project.
 
-Project X: Real-Time Air Quality Data Pipeline
-This project is a complete, end-to-end data engineering pipeline that ingests, processes, and stores live air quality data from major Indian cities. The system is built using industry-standard tools including Kafka, Apache Spark, and PostgreSQL, demonstrating a full data lifecycle from raw, real-time events to structured, actionable insights.
+🚀 Project DS-X: Live Air Quality Data Pipeline with Kafka and Spark
 
-The final output is stored in a PostgreSQL database, making it ready for analysis or visualization with tools like the included Streamlit dashboard.
+This project is a complete, end-to-end data engineering pipeline that demonstrates a real-world data processing architecture. It captures live air quality data from major Indian cities, processes it in real-time using Apache Spark, and stores the historical trends in a PostgreSQL database. The final, cleaned data is presented in an 
+interactive streamlit dashboard.
 
-
-Architecture
-The pipeline follows a modern, decoupled architecture:
-
-Live API -> Kafka Producer (Python) -> Kafka Topic -> Spark Streaming (PySpark) -> PostgreSQL Database
+This project showcases skills in data ingestion, real-time stream processing, data storage, and data visualization, using a modern, industry-standard tech stack.
 
 
-Technologies Used
-Data Ingestion: Python (using requests, confluent-kafka)
-Data Transport: Apache Kafka & Zookeeper
-Data Processing: Apache Spark (PySpark)
-Data Storage: PostgreSQL
-Orchestration: Docker 
-Dashboard: Streamlit
+📊 Project in Action
+Live Streamlit Dashboard
+The final output is a clean, auto-refreshing dashboard that displays the latest air quality metrics and visualizes historical trends for each city.
+
+
+![Streamlit Dashboard](https://github.com/Axikop/ProjectX/blob/main/demo1.png?raw=true)
+
+
+![Streamlit Dashboard](https://github.com/Axikop/ProjectX/blob/main/demo2.png?raw=true)
+
+
+Spark Streaming UI
+The Spark UI shows the live processing of data batches as they arrive from the Kafka stream.
+
+![SPARK UI](https://github.com/Axikop/ProjectX/blob/main/sparkui.png?raw=true)
+
+
+🏗️ Architecture
+The pipeline follows a modern, decoupled, and scalable architecture:
+
+Live API -> Kafka Producer -> Kafka Topic -> Spark Streaming (PySpark) -> PostgreSQL Database -> UI
+
+1.A Python Producer continuously fetches data from the World Air Quality Index API for multiple cities.
+
+2.This data is sent as JSON messages to an Apache Kafka topic, which acts as a durable, real-time message bus.
+
+3.An Apache Spark streaming job, running locally, connects to the Kafka topic, consumes the data in micro-batches, and performs real-time transformations and aggregations (calculating average AQI, determining health status).
+
+4.The processed, insightful data is then appended to a PostgreSQL database, creating a historical log of air quality trends.
+
+5.A Streamlit web application queries the PostgreSQL database and presents the data in an interactive, user-friendly dashboard that auto-refreshes.
+
+6.The entire backend infrastructure (Kafka, Zookeeper, PostgreSQL) is containerized and managed with Docker and Docker Compose for easy setup and portability.
+
+
+
+🚀 How to Run This Project
+
+Prerequisites-
+Docker and Docker Compose must be installed.
+You need a free API key from the World Air Quality Index Project.
+
+Step 1: Clone and Configure
+Clone this repository to your local machine.
+Open the kafka_producers/air_quality_producer.py script.
+Inside the script, replace the placeholder API key with your actual key
+
+
+Step 2: Launch the Backend Infrastructure
+From the project's root directory, start the Kafka and PostgreSQL containers.
+
+docker-compose up -d
+
+Important: Wait for about 45-60 seconds after running this command to allow the services to fully initialize
+
+
+Step 3: Start the Data Producer
+This script will fetch data from the API and send it to Kafka.
+
+Open a new terminal.
+
+Install the required Python libraries:
+
+pip install -r kafka_producers/requirements.txt
+
+Run the producer script:
+
+python kafka_producers/air_quality_producer.py
+
+
+Step 4: Start the Spark Processing Job
+This script will read from Kafka, process the data, and save it to PostgreSQL.
+
+Open a third terminal.
+
+Install the required Python libraries:
+
+pip install pyspark==3.4.1
+
+Run the Spark Streaming script:
+
+python spark/app/stream_air_quality_processor.py
+
+
+Step 5: Launch the Streamlit Dashboard
+This is the final step to view the results.
+
+Open a fourth terminal.
+
+Install the required Python libraries:
+
+pip install -r dashboard/requirements.txt
+
+Run the Streamlit app:
+
+streamlit run dashboard/app.py
+
+
+
+
+
+
+
+
