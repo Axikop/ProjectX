@@ -34,23 +34,6 @@ The pipeline follows a modern, decoupled, and scalable architecture:
 
 ---
 
-## ✨ Key Features
-* **End-to-End Data Flow:** Demonstrates the full data lifecycle, from raw API data to a polished user dashboard.
-* **Real-Time Processing:** Utilizes Spark Structured Streaming to process data with low latency.
-* **Historical Trend Analysis:** Persists data in a database, enabling time-series analysis and visualization.
-* **Scalable & Decoupled:** Each component (ingestion, processing, storage, presentation) is independent, making the system robust and easy to maintain.
-
----
-
-## 🛠️ Technologies Used
-
-* **Data Ingestion:** Python (`requests`, `confluent-kafka`)
-* **Data Transport / Streaming:** Apache Kafka & Zookeeper
-* **Data Processing:** Apache Spark (PySpark)
-* **Data Storage:** PostgreSQL
-* **Dashboarding:** Streamlit, Pandas, Altair
-* **Infrastructure:** Docker & Docker Compose
-
 ---
 
 ## 🚀 How to Run This Project
@@ -66,8 +49,9 @@ The pipeline follows a modern, decoupled, and scalable architecture:
 
 ### Step 2: Launch the Backend Infrastructure
 From the project's root directory, start the Kafka and PostgreSQL containers.
-```bash
+```
 docker-compose up -d
+```
 
 Important: Wait for about 45-60 seconds after running this command to allow the services to fully initialize.
 
@@ -77,35 +61,36 @@ This script will fetch data from the API and send it to Kafka.
 Open a new terminal.
 
 Install the required Python libraries:
-
+```
 pip install -r kafka_producers/requirements.txt
-
+```
 Run the producer script:
-
+```
 python kafka_producers/air_quality_producer.py
-
+```
 Step 4: Start the Spark Processing Job
 This script will read from Kafka, process the data, and save it to PostgreSQL.
 
 Open a third terminal.
 
 Install the required Python libraries:
-
+```
 pip install pyspark==3.4.1
-
+```
 Run the Spark Streaming script:
-
+```
 python spark/app/stream_air_quality_processor.py
-
+```
 Step 5: Launch the Streamlit Dashboard
 This is the final step to view the results.
 
 Open a fourth terminal.
 
 Install the required Python libraries:
-
+```
 pip install -r dashboard/requirements.txt
-
+```
 Run the Streamlit app:
-
+```
 streamlit run dashboard/app.py
+```
